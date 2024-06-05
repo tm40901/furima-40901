@@ -19,4 +19,6 @@ class User < ApplicationRecord
 
   VALID_KATAKANA_REGEX = /\A[ァ-ヶー－]+\z/.freeze
   validates :last_name_kana, :first_name_kana, format: { with: VALID_KATAKANA_REGEX }
+
+  has_many :items
 end
