@@ -10,7 +10,7 @@ window.addEventListener('turbo:load', () => {
     addTaxDom.innerHTML = taxValue.toLocaleString();
     
     const addProfitDom = document.getElementById("profit")
-    const profitValue = inputValue - taxValue;
+    const profitValue = Math.floor(inputValue - taxValue);
     addProfitDom.innerHTML = profitValue.toLocaleString();
   });
 });
