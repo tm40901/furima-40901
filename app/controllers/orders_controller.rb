@@ -1,9 +1,9 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_item, only:[:index, :create]
   
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new
     if @item.user.id == current_user.id || @item.order.present?
       redirect_to root_path
@@ -11,7 +11,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_params)
     @price = @item.price
 
@@ -42,5 +41,9 @@ class OrdersController < ApplicationController
       card:     order_params[:token],
       currency: 'jpy'
     )
+  end
+
+  def find_item
+    @item = Item.find(params[:item_id])
   end
 end
