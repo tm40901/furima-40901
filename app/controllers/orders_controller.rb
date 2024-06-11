@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @item = Item.find(params[:item_id])
     @order_form = OrderForm.new
-    if @item.user.id == current_user.id
+    if @item.user.id == current_user.id || @item.order.present?
       redirect_to root_path
     end
   end
@@ -13,7 +13,6 @@ class OrdersController < ApplicationController
   def create
     @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_params)
-    
     @price = @item.price
 
     if @order_form.valid? 
@@ -35,7 +34,6 @@ class OrdersController < ApplicationController
                                        :building,
                                        :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
-
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
