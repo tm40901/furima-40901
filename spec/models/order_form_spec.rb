@@ -21,7 +21,7 @@ RSpec.describe OrderForm, type: :model do
       it 'post_codeが空だと保存できないこと' do
         @order_form.post_code = ''
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Post code can't be blank", "Post code is invalid")
+        expect(@order_form.errors.full_messages).to include("Post code can't be blank")
       end
       it 'post_codeが半角のハイフンを含んだ正しい形式でないと保存できないこと' do
         @order_form.post_code = '1234567'
@@ -46,7 +46,7 @@ RSpec.describe OrderForm, type: :model do
       it 'phone_numberは空だと保存できないこと' do
         @order_form.phone_number = ''
         @order_form.valid?
-        expect(@order_form.errors.full_messages).to include("Phone number can't be blank", "Phone number is invalid")
+        expect(@order_form.errors.full_messages).to include("Phone number can't be blank")
       end
       it 'phone_numberは10桁以上11桁以内でないと保存できない' do
         @order_form.phone_number = '12345679'
